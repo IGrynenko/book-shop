@@ -1,0 +1,15 @@
+<div class="book-block">
+    <div class="title-block">
+        <h3>Title: {{_book?.name}}</h3>
+        <div class="category">{{_book?.category | bookType}}</div>
+    </div>
+    <div class="body-block">
+        <div class="info">
+            <div class="book-desc">{{_book?.description}}</div>
+        </div>
+        <div class="price">
+            <div class="book-price">Price: {{_book?.price}}</div>
+            <button [disabled]="!_book?.isAvailable" (click)="buy()">Buy</button>
+        </div>
+    </div>
+</div>
