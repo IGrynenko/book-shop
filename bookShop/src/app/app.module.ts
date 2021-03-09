@@ -3,8 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
-import { StoreModule } from './modules/store/store.module';
+import { BooksModule, CartModule, SharedModule, LayoutModule } from './modules';
 
 @NgModule({
   declarations: [
@@ -12,7 +11,10 @@ import { StoreModule } from './modules/store/store.module';
   ],
   imports: [
     BrowserModule,
-    StoreModule,
+    BooksModule,
+    CartModule,
+    SharedModule,
+    LayoutModule,
     AppRoutingModule
   ],
   providers: [],

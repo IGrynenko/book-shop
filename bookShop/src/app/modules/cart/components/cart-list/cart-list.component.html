@@ -1,0 +1,18 @@
+<form [formGroup]="form">
+    <label for="opt">Sort by</label>
+    <select formControlName="sorting" id="opt">
+        <option value="name">Name</option>
+        <option value="price">Price</option>
+        <option value="numOfCopies">Number in cart</option>
+    </select>
+</form>
+
+<div *ngIf="booksInCart?.length > 0; else emptyCart" class="cart-content">
+    <app-cart-item *ngFor="let book of booksInCart" [bookInCart]="book"
+    (deleteBook)="deleteBookFromCart($event)">
+    </app-cart-item>
+</div>
+
+<ng-template #emptyCart>
+    <div class="empty">EMPTY</div>
+</ng-template>

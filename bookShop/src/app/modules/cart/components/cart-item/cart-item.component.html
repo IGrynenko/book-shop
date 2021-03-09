@@ -1,0 +1,7 @@
+<div class="cart-item" appSelectItem>
+    <div class="title">{{bookInCart?.book?.name}}</div>
+    <div class="num">
+        <input type="text" [value]="numOfCopies"  minlength="1" maxlength="2" (blur)="changeNum($event)">
+    </div>
+    <div class="del" (click)="delete()">[X]</div>
+</div>
