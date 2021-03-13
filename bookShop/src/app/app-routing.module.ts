@@ -5,7 +5,7 @@ import { BooksComponent, BookInfoComponent } from './modules/books/components';
 import { CartComponent } from './modules/cart/components';
 import { OrdersComponent } from './modules/orders/components';
 import { AboutComponent, PageNotFoundComponent } from './modules/layout/components';
-// import {} from '';
+import { AccessAdminGuard } from './modules/core/guards';
 
 const routes: Routes = [
   { path: '', redirectTo: 'products-list', pathMatch: 'full' },
@@ -16,7 +16,8 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   {
     path: 'admin',
-    loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
+    loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule),
+    canActivate: [AccessAdminGuard]
   },
   { path: '**', component: PageNotFoundComponent }
 ];

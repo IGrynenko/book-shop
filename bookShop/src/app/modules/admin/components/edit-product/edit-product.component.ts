@@ -12,6 +12,8 @@ import { ProductBase } from '../product-base/product-base';
 })
 export class EditProductComponent extends ProductBase implements OnInit {
 
+  private dataSaved: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private booksService: BooksService,
@@ -44,10 +46,20 @@ export class EditProductComponent extends ProductBase implements OnInit {
   onSubmit() {
     const bookFromForm = this.createBook();
     this.booksService.updateBook(bookFromForm);
+    this.dataSaved = true;
     this.back();
   }
 
   back() {
     this.location.back();
+  }
+
+  canDeactivate(): boolean {
+    if (!this.dataSaved && this.productForm.dirty) {
+      const userConfirm = confirm("You have changed and unsaved data. Are you sure you want to leave?");
+      return userConfirm;
+    }
+
+    return true;
   }
 }

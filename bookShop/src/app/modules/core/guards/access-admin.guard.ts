@@ -1,15 +1,36 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+
+import { LocalStorageService } from '../services';
+
+const userWithRights = { password: 'pass123'} ;
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccessAdminGuard implements CanActivate {
+
+  constructor(
+    private localStorageService: LocalStorageService
+  ) { }
+
   canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return true;
+    state: RouterStateSnapshot): boolean {
+      const authorized = this.localStorageService.getItem('authorized');
+
+      if (!authorized) {
+        const pass = prompt("Password");
+      
+        if (pass && pass === userWithRights.password) {
+          this.localStorageService.setItem('authorized', true)
+          return true;
+        }
+        else {
+          return false;
+        }
+      }
+      return true;
   }
   
 }
