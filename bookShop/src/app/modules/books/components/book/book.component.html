@@ -1,6 +1,6 @@
 <div class="book-block" selectBlock="purple">
     <div class="title-block">
-        <h3>Title: {{_book?.name}}</h3>
+        <h3><a routerLink="/product/{{_book.id}}">Title: {{_book?.name}}</a></h3>
         <div class="category">{{_book?.category | bookType}}</div>
     </div>
     <div class="body-block">
@@ -9,7 +9,7 @@
         </div>
         <div class="price">
             <div class="book-price">Price: {{_book?.price | currency:'UAH'}}</div>
-            <button [disabled]="!_book?.isAvailable" (click)="buy()">Buy</button>
+            <button mat-raised-button color="primary" [disabled]="!_book?.isAvailable" (click)="buy()">Buy</button>
         </div>
     </div>
 </div>

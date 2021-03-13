@@ -1,12 +1,28 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
+import { OrdersComponent } from './components';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    OrdersComponent
+  ],
   imports: [
-    CommonModule
+    CommonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatButtonModule,
+    ReactiveFormsModule
+  ],
+  exports: [
+    OrdersComponent
   ]
 })
 export class OrdersModule { }

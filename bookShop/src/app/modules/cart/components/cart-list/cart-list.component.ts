@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
 
 import { IBookInCart } from 'src/app/modules/shared/models';
 import { CartService } from './../../../shared/services';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cart-list',
@@ -12,28 +13,23 @@ import { CartService } from './../../../shared/services';
 })
 export class CartListComponent implements OnInit, OnDestroy {
 
-  // booksInCart: Observable<IBookInCart[]>;
   booksInCart: IBookInCart[];
   form = new FormGroup({
     sorting: new FormControl('')
   });
 
-  // isShown: boolean = false;
-  // test = [];
+  private destroyed$ = new Subject<boolean>();
 
   constructor(
     private cartService: CartService
   ) { }
 
   ngOnInit(): void {
-    // this.booksInCart = this.cartService.booksInCart$;
     this.form.controls.sorting.setValue('name');
-    this.form.controls.sorting.valueChanges.subscribe((value) => {
+    this.form.controls.sorting.valueChanges.pipe(takeUntil(this.destroyed$)).subscribe((value) => {
       this.cartService.setSorting = value;
     });
-    this.cartService.booksInCart$.subscribe(items => {
-      // console.log(items)
-      // this.isShown = items && items.length > 0 ? true : false;
+    this.cartService.booksInCart$.pipe(takeUntil(this.destroyed$)).subscribe(items => {
       this.booksInCart = items;
     })
   }
@@ -43,7 +39,8 @@ export class CartListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
+    this.destroyed$.next(false);
+    this.destroyed$.complete();
   }
 
 }

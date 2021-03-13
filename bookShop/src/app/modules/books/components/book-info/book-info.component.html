@@ -1,0 +1,13 @@
+<div class="content">
+    <h3>Title: {{_book?.name}}</h3>
+    <div class="category">Genre: {{_book?.category | bookType}}</div>
+    <div class="body-block">
+        <div class="info">
+            <div class="book-desc">Description: {{_book?.description}}</div>
+        </div>
+        <div class="price">
+            <div class="book-price">Price: {{_book?.price | currency:'UAH'}}</div>
+        </div>
+    </div>
+    <button mat-button (click)="back()">BACK</button>
+</div>

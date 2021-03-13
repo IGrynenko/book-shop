@@ -6,6 +6,6 @@ export interface IBook {
     description: string;
     price: number;
     category: BookType;
-    createDate: number;
+    createDate: string;
     isAvailable: boolean;
 }

@@ -1,4 +1,5 @@
-<div class="cart">
+<div class="content">
     <h2>Cart</h2>
     <app-cart-list></app-cart-list>
+    <button mat-button color="primary" (click)="confirm()" [disabled]="!emptyList">Confirm order</button>
 </div>

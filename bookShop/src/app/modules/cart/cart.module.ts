@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { MatButtonModule } from '@angular/material/button';
+
 import { CartComponent, CartItemComponent, CartListComponent } from './components';
 import { SharedModule } from '../shared/shared.module';
 
@@ -12,7 +14,8 @@ import { SharedModule } from '../shared/shared.module';
   ],
   imports: [
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatButtonModule
   ],
   exports: [
     CartComponent

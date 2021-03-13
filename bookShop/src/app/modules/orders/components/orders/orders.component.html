@@ -1,0 +1,23 @@
+<div class="content">
+    <form [formGroup]="orderForm" (ngSubmit)="onSubmit()" *ngIf="cartService.booksInCart$ | async; else emptyList">
+        <mat-form-field appearance="fill">
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="address">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Payment method</mat-label>
+            <mat-select formControlName="paymentMethod">
+              <mat-option value="one">Cash</mat-option>
+              <mat-option value="two">Banking card</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Commentary</mat-label>
+            <textarea matInput formControlName="commentary"></textarea>
+          </mat-form-field>
+          <button type="submit" mat-button color="primary" [disabled]="!orderForm.valid">Submit</button>
+    </form>
+    <ng-template #emptyList>
+      Sorry, but first pick some books and then come back to complete the order
+    </ng-template>
+</div>

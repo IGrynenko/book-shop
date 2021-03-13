@@ -1,19 +1,26 @@
 import { NgModule } from '@angular/core';
 
+import {MatButtonModule} from '@angular/material/button';
+
+import { AppRoutingModule } from '../../app-routing.module';
 import { SharedModule } from '../shared/shared.module';
-import { BookComponent, BooksComponent } from './components';
+import { BookComponent, BooksComponent, BookInfoComponent } from './components';
 
 @NgModule({
   declarations: [
     BookComponent,
-    BooksComponent
+    BooksComponent,
+    BookInfoComponent
   ],
   imports: [
-    SharedModule
+    SharedModule,
+    MatButtonModule,
+    AppRoutingModule
   ],
   exports: [
     BookComponent,
-    BooksComponent
+    BooksComponent,
+    BookInfoComponent
   ]
 })
 export class BooksModule { }

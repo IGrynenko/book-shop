@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
 
 import { IBook, IBookInCart } from '../models';
 import { OrderByPipePipe } from '../pipes';
@@ -15,7 +15,7 @@ export class CartService {
  
   private books: IBookInCart[] = [];
 
-  private booksInCart: Subject<IBookInCart[]> = new Subject<IBookInCart[]>()
+  private booksInCart: ReplaySubject<IBookInCart[]> = new ReplaySubject<IBookInCart[]>()
   booksInCart$ = this.booksInCart.asObservable();
 
   private sortingField = 'name';

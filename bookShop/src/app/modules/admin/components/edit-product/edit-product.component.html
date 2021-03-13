@@ -1,0 +1,45 @@
+<div class="content">
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="standard">
+            <mat-label>Id</mat-label>
+            <input matInput formControlName="id">
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name">
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+            <mat-label>Category</mat-label>
+            <mat-select formControlName="category">
+                <mat-option value="0">Action</mat-option>
+                <mat-option value="1">Classics</mat-option>
+                <mat-option value="2">Detective</mat-option>
+                <mat-option value="3">Fantasy</mat-option>
+                <mat-option value="4">Historical</mat-option>
+                <mat-option value="5">Horror</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="createDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description">
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+            <mat-label>Is available</mat-label>
+            <mat-select formControlName="isAvailable">
+              <mat-option value="1">Yes</mat-option>
+              <mat-option value="">No</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+            <mat-label>Price</mat-label>
+            <input matInput formControlName="price">
+        </mat-form-field>
+        <button type="submit" mat-button color="primary" [disabled]="!productForm.valid">Submit</button>
+    </form>
+</div>
