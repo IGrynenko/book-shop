@@ -1,6 +1,6 @@
 <div class="content">
-    <div class="products" *ngIf="(booksService.getBooks() | async).length > 0; else emptyProductList">
-        <div class="item" *ngFor="let book of booksService.getBooks() | async">
+    <div class="products" *ngIf="_books && _books.length > 0; else emptyProductList">
+        <div class="item" *ngFor="let book of _books">
             <div class="id">{{book.id}}</div>
             <div class="name">{{book.name}}</div>
             <div class="edit">

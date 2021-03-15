@@ -1,7 +1,8 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
 
 import { BooksService } from 'src/app/modules/books/services';
 import { ProductBase } from '../product-base/product-base';
@@ -11,10 +12,12 @@ import { ProductBase } from '../product-base/product-base';
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.scss']
 })
-export class AddProductComponent extends ProductBase implements OnInit {
+export class AddProductComponent extends ProductBase implements OnInit, OnDestroy {
+
+  private _sub: Subscription;
 
   constructor(
-    private bookService: BooksService,
+    private booksService: BooksService,
     private location: Location,
     private snackBar: MatSnackBar
   ) {
@@ -26,13 +29,24 @@ export class AddProductComponent extends ProductBase implements OnInit {
 
   onSubmit(): void {
     const book = this.createBook();
-    const result = this.bookService.addBook(book);
+    this._sub = this.booksService.getBooks().subscribe(books => {
+      if (books) {
+        const ids = books.map(b => b.id);
 
-    if (result) {
-      this.location.back();
-    }
-    else {
-      this.snackBar.open("Wrong Id", null, { duration: 1000 });
-    }
+        if (ids.includes(book.id)) {
+          this.snackBar.open("Wrong Id", null, { duration: 1000 });
+        }
+        else {
+          this.booksService.addBook(book).then(b => {
+            if (b) this.location.back();
+          })
+        }
+      }
+    });
   }
+
+  ngOnDestroy(): void {
+    this._sub.unsubscribe();
+  }
+
 }

@@ -1,0 +1,58 @@
+{
+  "books": [
+    {
+      "id": 1,
+      "category": 0,
+      "createDate": "2000-12-01",
+      "description": "some description",
+      "isAvailable": true,
+      "name": "Aaaa12",
+      "price": 100
+    },
+    {
+      "id": 2,
+      "name": "Bbbb",
+      "category": 1,
+      "createDate": "2010-01-21",
+      "description": "some description",
+      "isAvailable": true,
+      "price": 200
+    },
+    {
+      "id": 3,
+      "category": 2,
+      "createDate": "2001-07-13",
+      "description": "some description",
+      "isAvailable": true,
+      "name": "Cccc1",
+      "price": 50
+    },
+    {
+      "id": 4,
+      "name": "Dddd",
+      "category": 1,
+      "createDate": "1995-11-22",
+      "description": "some description",
+      "isAvailable": false,
+      "price": 20
+    },
+    {
+      "id": 5,
+      "name": "Eeee",
+      "category": 3,
+      "createDate": "1987-06-06",
+      "description": "some description",
+      "isAvailable": true,
+      "price": 80
+    },
+    {
+      "id": 6,
+      "name": "Ffff",
+      "category": 4,
+      "createDate": "2015-06-06",
+      "description": "some description",
+      "isAvailable": true,
+      "price": 150
+    }
+  ]
+}

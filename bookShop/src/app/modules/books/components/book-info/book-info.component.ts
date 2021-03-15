@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { IBook } from 'src/app/modules/shared/models';
 import { BooksService } from '../../services';
@@ -11,15 +12,17 @@ import { BooksService } from '../../services';
   styleUrls: ['./book-info.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BookInfoComponent implements OnInit {
+export class BookInfoComponent implements OnInit, OnDestroy {
 
   _book: IBook;
+  private _sub: Subscription;
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private booksService: BooksService,
-    private router: Router 
+    private router: Router,
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -28,17 +31,23 @@ export class BookInfoComponent implements OnInit {
 
   private initBookInfo(): void {
     const bookId = this.route.snapshot.paramMap.get('productID');
-    const bookInfo = this.booksService.getBookById(+bookId);
-    if (bookInfo) {
-      this._book = bookInfo;
-    }
-    else {
-      this.router.navigate(['products-list']);
-    }
+    this._sub = this.booksService.getBookById(+bookId).subscribe(books => {
+      if (books && books.length > 0) {
+        this._book = books[0];
+        this.cd.detectChanges()
+      }
+      else {
+        this.router.navigate(['products-list']);
+      }
+    })  
   }
 
   back(): void {
     this.location.back();
+  }
+
+  ngOnDestroy(): void {
+    this._sub.unsubscribe();
   }
 
 }

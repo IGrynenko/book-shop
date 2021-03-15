@@ -3,7 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  name: 'BOOK_SHOP_TEST',
+  baseUrl: 'http://localhost:3000/',
+  clientUrl: 'http://localhost:4200/',
+  settingsKey: 'app-settings',
+  settingsUrl: 'assets/app-settings.json'
 };
 
 /*

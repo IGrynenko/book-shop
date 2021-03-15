@@ -9,21 +9,21 @@ import { OrderByPipePipe } from '../pipes';
 })
 export class CartService {
 
-  get CartProduct(): IBookInCart[] { return this.books; }
-  totalQuantity: number;
-  totalSum: number;
- 
-  private books: IBookInCart[] = [];
-
-  private booksInCart: ReplaySubject<IBookInCart[]> = new ReplaySubject<IBookInCart[]>()
-  booksInCart$ = this.booksInCart.asObservable();
-
-  private sortingField = 'name';
-
   set setSorting(name: string) {
     this.sortingField = name;
     this.updateBooksInCart();
   }
+
+  get CartProduct(): IBookInCart[] { return this.books; }
+
+  totalQuantity: number;
+  totalSum: number;
+ 
+  private books: IBookInCart[] = [];
+  private sortingField = 'name';
+
+  private booksInCart: ReplaySubject<IBookInCart[]> = new ReplaySubject<IBookInCart[]>()
+  booksInCart$ = this.booksInCart.asObservable();
 
   constructor(
     private orderByPipePipe: OrderByPipePipe
@@ -76,8 +76,6 @@ export class CartService {
   }
 
   private updateBooksInCart() {
-    //question
-    // console.log(this.CartProduct)
     this.booksInCart.next(this.orderByPipePipe.transform<IBookInCart>(this.CartProduct, this.sortingField));
   }
 }

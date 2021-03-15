@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { BooksService } from 'src/app/modules/books/services';
 import { ProductBase } from '../product-base/product-base';
@@ -10,9 +11,10 @@ import { ProductBase } from '../product-base/product-base';
   templateUrl: './edit-product.component.html',
   styleUrls: ['./edit-product.component.scss']
 })
-export class EditProductComponent extends ProductBase implements OnInit {
+export class EditProductComponent extends ProductBase implements OnInit, OnDestroy {
 
   private dataSaved: boolean = false;
+  private _sub: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -30,27 +32,33 @@ export class EditProductComponent extends ProductBase implements OnInit {
     const id = this.route.snapshot.paramMap.get('productID');
     
     if (id) {
-      const book = this.booksService.getBookById(+id);
-      if (book) {
-        this.productForm.controls.id.setValue(book.id);
-        this.productForm.controls.name.setValue(book.name);
-        this.productForm.controls.category.setValue(book.category.toString());
-        this.productForm.controls.createDate.setValue(book.createDate);
-        this.productForm.controls.description.setValue(book.description);
-        this.productForm.controls.isAvailable.setValue(book.isAvailable ? '1' : '');
-        this.productForm.controls.price.setValue(book.price);
-      }
+      this._sub = this.booksService.getBookById(+id).subscribe(books => {
+        if (books && books.length > 0) {
+          const book = books[0];
+          this.productForm.controls.id.setValue(book.id);
+          this.productForm.controls.name.setValue(book.name);
+          this.productForm.controls.category.setValue(book.category.toString());
+          this.productForm.controls.createDate.setValue(book.createDate);
+          this.productForm.controls.description.setValue(book.description);
+          this.productForm.controls.isAvailable.setValue(book.isAvailable ? '1' : '');
+          this.productForm.controls.price.setValue(book.price);
+        }
+      });
+      
     }
   }
 
-  onSubmit() {
+  onSubmit(): void {
     const bookFromForm = this.createBook();
-    this.booksService.updateBook(bookFromForm);
-    this.dataSaved = true;
-    this.back();
+    this.booksService.updateBook(bookFromForm).then(book => {
+      if (book) {
+        this.dataSaved = true;
+        this.back();
+      }
+    })
   }
 
-  back() {
+  back(): void {
     this.location.back();
   }
 
@@ -62,4 +70,9 @@ export class EditProductComponent extends ProductBase implements OnInit {
 
     return true;
   }
+
+  ngOnDestroy(): void {
+    this._sub.unsubscribe();
+  }
+
 }
